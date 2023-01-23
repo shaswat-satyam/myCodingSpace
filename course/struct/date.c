@@ -18,8 +18,11 @@ int main(){
     date2.month = 2;
     date2.year = 2015;
 
-    if( date1 == date2
-    ){
+    int flag = (date1.day == date2.day ||                     
+                date1.month == date2.month || 
+                date1.year == date2.year );
+
+    if(flag){
         printf("Equal");
     }
     else{
