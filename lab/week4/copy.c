@@ -22,7 +22,7 @@ int main(int argc, char*argv[]){
         fputc(ch,cf);
         ch = fgetc(mf);
     }
-    printf("\n File Copied Successfully");
+    printf("File Copied Successfully\n");
     fclose(mf);
     fclose(cf);
 }
