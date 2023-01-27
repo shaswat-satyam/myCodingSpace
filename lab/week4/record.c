@@ -15,7 +15,7 @@ int main(){
     scanf("%d %d",&m,&n);
 
 
-    printf("Enter the details of the managers :\n|id|salary|name|\n");
+    printf("Enter the details of the managers :\nid salary name \n");
     for (int i = 0; i < m; i++)
     {
         scanf("%d %d %s",&id, &salary, name);
@@ -24,7 +24,7 @@ int main(){
 
     fprintf(fl,"\n");
 
-    printf("Enter the details of the workers :\n|id|salary|name|\n");
+    printf("Enter the details of the workers :\nid salary name \n");
     for (int i = 0; i < n; i++)
     {
         scanf("%d %d %s",&id, &salary, name);

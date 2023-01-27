@@ -1,5 +1,5 @@
-1 2000 thorfinn
-2 2500 edward
+1 2000 ravi
+2 5000 ram
 
-1 100 denji
-2 120 deku
+5 150 paul
+8 200 saun
