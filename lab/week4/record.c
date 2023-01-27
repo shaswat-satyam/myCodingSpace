@@ -7,8 +7,9 @@ int main(){
     int id,salary;
     char name[30];
 
-    FILE* fl;
-    fl = fopen("file.txt","r+");
+    FILE* fw, * fm;
+    fw = fopen("workers.txt","r+");
+    fm = fopen("managers.txt","r+");
 
 
     printf("Enter the number of managers and workers: ");
@@ -19,18 +20,16 @@ int main(){
     for (int i = 0; i < m; i++)
     {
         scanf("%d %d %s",&id, &salary, name);
-        fprintf(fl,"%d %d %s\n",id,salary,name);
+        fprintf(fm,"%d %d %s\n",id,salary,name);
     }
 
-    fprintf(fl,"\n");
 
     printf("Enter the details of the workers :\nid salary name \n");
     for (int i = 0; i < n; i++)
     {
         scanf("%d %d %s",&id, &salary, name);
-        fprintf(fl,"%d %d %s\n",id,salary,name);
+        fprintf(fw,"%d %d %s\n",id,salary,name);
     }
     
-    fclose(fl);
     return 0;
 }

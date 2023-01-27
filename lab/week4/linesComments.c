@@ -2,7 +2,7 @@
 
 FILE *fp;
 char ch;
-int lines = 0, blines = 0, comments = 0;
+int lines = 1, blines = 0, comments = 0;
 
 int main(){
 
@@ -10,20 +10,22 @@ int main(){
     int status = fscanf(fp,"%c",&ch);
     while(status == 1){
         status = fscanf(fp,"%c",&ch);
-        if(ch = "\n"){
-            status = fscanf(fp,"%c",&ch);
-            if(ch = "\n"){
-                blines++;
-            }
+        if(ch == '\n'){
             lines++;
-        }
-        if(ch = "\\" ){
             status = fscanf(fp,"%c",&ch);
-            if(ch = "\\"|| ch ="*"){
+            if(ch == '\n'){
+                blines++;
+                lines++;
+            }
+            
+        }
+
+        if(ch == '/'){
+            status = fscanf(fp,"%c",&ch);
+            if(ch == '/'|| ch == '*'){
                 comments++;
             }
-        }
-            
+        }    
     }
     
     printf("The number of lines are: %d\n",lines);
