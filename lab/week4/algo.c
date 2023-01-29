@@ -26,7 +26,7 @@ void display(int A[],int size){
 int main(){
     int arr[] = {25,77,73,63,78,44,90,7,51,41};
     display(arr,10);
-    insertion(arr,10);
+    selection(arr,10);
     display(arr,10);
 
 }
