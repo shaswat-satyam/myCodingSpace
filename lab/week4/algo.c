@@ -14,6 +14,7 @@ char* rString(char str[]);
 int sqr(int num);
 int* bubble(int a[],int size);
 int* insertion(int A[],int size);
+int* selection(int A[],int size);
 
 void display(int A[],int size){
     for(int i =0; i < size;i++){
@@ -138,9 +139,9 @@ int sqr(int num){
 
 int* bubble(int a[],int size){
     int flag,temp;
-    while(1){
+    for(int i =0; i < size-1; i++){
         flag = 0;
-        for(int j =0 ; j < size -1;j++){
+        for(int j =0 ; j < size - i - 1; j++){
             if(a[j]>a[j+1]){
                 temp = a[j];
                 a[j] = a[j+1];
@@ -155,7 +156,21 @@ int* bubble(int a[],int size){
     }
 }
 
-int* insertion(int A[],int size){
+int* insertion(int arr[],int n){
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+int* selection(int A[],int size){
     int min,location,temp;
     for(int i =0;i<size;i++){
         min = __INT_MAX__;
