@@ -1,179 +1,104 @@
+/* ---------------------------------------------------------- SOURCE_CODE --------------------------------------------------------*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <termios.h>
-#include <time.h>
 
-const int N = 3;
-
-int hour = 0;
-int minute = 0;
-int second = 0;
-int check_diagonals(int array[N][N],int player){
-    if(array[0][0] == array[1][1] && array[1][1] == array[2][2] && array[1][1] == player){
-        printf("Diagonal 1 win! ");
-            return 1;
-    }
-    else if(array[2][0] == array[1][1] && array[1][1] == array[0][2] && array[1][1] == player){
-        printf("Diagonal 2 Win! ");
-        return 1;
-    }
-    else{return 0;}
-}
-
-int check_columns(int array[N][N], int player){
-    for(int i = 0; i < N; i++){
-        if(array[0][i] == array[1][i] && array[1][i] == array[2][i] && array[1][i] == player){
-            printf("Column Win %d! ",i);
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int check_rows(int array[N][N],int player){
-    for(int i = 0; i < N;i++){
-        if(array[i][0] == array[i][1] && array[i][1] == array[i][2] && array[i][1] == player){
-            printf("Row Win %d! ",i);
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int win(int a[N][N], int player){
-    if(check_rows(a,player)||check_columns(a,player)||check_diagonals(a,player)){
-        printf("Congratulations! Player %d wins!",player);
-        return 1;
-    }
-    return 0;
-}
-
-int set(int a[N][N], int m, int n, int player){
-    a[m][n] = player;
-    return 0;
-}
-
-int draw(int a[N][N]){
-    for(int i = 0; i < N; i++){
-        for(int j = 0; j < N ; j++){
-            if(a[i][j] == 0){
-                return 0;
-            }
-        }
-    }
-    return 1;
-}
-
-void display(int a[3][3])
-{
-    system("clear");
-    printf("%02d : %02d : %02d \n", hour, minute, second);
-    fflush(stdout);
-    second++;
-    if (second == 60)
-    {
-        minute += 1;
-        second = 0;
-    }
-
-    if (minute == 60)
-    {
-        hour += 1;
-        minute = 0;
-    }
-
-    if (hour == 24)
-    {
-        hour = 0;
-        minute = 0;
-        second = 0;
-    }
-
-    for(int j = 0; j < 3; j++)
-        printf("%d  ",j);
-    printf("\n");
-    for(int j =0; j < N; j++){
-            printf("---");
-        }
-        printf("\n");
-
-    for(int i = 0 ; i < N; i++){
-        for(int j =0; j < N; j++){
-            if(a[i][j]==0){
-                printf("  |");
-            }
-            else if(a[i][j]==1){
-                printf("X |");
-            }
-            else{
-                printf("O |");
-            }
-        }
-        printf("%d\n",i);
-        for(int j =0; j < N; j++){
-            printf("---");
-        }
-        printf("\n");
-    }
-}
-
-int playerMove(int matrix[N][N],int player){
-    int m,n;
-    char choice = 'c';
-
-    if(draw(matrix)){
-        printf("No one Wins!\nThank you for playing. ");
-        return 1;
-    }
-    printf("Player %d move (x,y):",player);
-
-    while(1){
-        display(matrix);
-        scanf("%d %d",&m,&n);
-        if(matrix[n][m] != 0 || m > 2 || n > 2){
-            printf("Incorrect Move \nReenter the move(x,y): ");
-            continue;
-        }
-        set(matrix,n,m,player);
-        break;
-    }
-
-    display(matrix);
-
-    if(win(matrix,player)){
-        printf("\nMatch Over!\nThank you for Playing. ");
-        return player;
-    }
-    return 0;
-}
-
-
+/* ---------------------------------------------------------- snake_game ---------------------------------------------------------*/
 
 int i, j, height = 35, width = 35;
 int gameover, score;
-int x, y, fruitx, fruity, flag;
+int fruitx, fruity, flag;
 
-// Function to generate the fruit within the boundary
-void setup()
+struct Node
 {
-    gameover = 0;
+    int x, y;
+    struct Node *next;
+} *head;
 
-    // Stores height and width
-    x = height / 2;
-    y = width / 2;
-label1:
-    fruitx = rand() % 35;
-    if (fruitx == 0)
-        goto label1;
-label2:
-    fruity = rand() % 35;
-    if (fruity == 0)
-        goto label2;
-    score = 0;
+void dr_boundary();
+void setup();
+void add_segment();
+void input();
+void logic();
+
+/* -------------------------------------------------------  tic-tac-toe_game -------------------------------------------------------*/
+
+const int N = 3;
+
+int playerMove(int matrix[N][N], int player);
+int draw(int a[N][N]);
+int check_diagonals(int array[N][N], int player);
+int check_columns(int array[N][N], int player);
+int check_rows(int array[N][N], int player);
+int win(int a[N][N], int player);
+int set(int a[N][N], int m, int n, int player);
+void display(int a[N][N]);
+
+/* ----------------------------------------------------------- driver_code ---------------------------------------------------------*/
+
+int main()
+{
+    int game, matrix[3][3] = {0};
+    char choice;
+    while (1)
+    {
+        printf("\n\n---------------------------------------------------- Welcome to Compiler Gamings ----------------------------------------------------\n\n");
+        printf("Press 1 to Play SNAKE\n");
+        printf("Press 2 to Play TIC-TAC-TOE\n");
+        printf("\nEnter your Choice :: ");
+
+        scanf("%d", &game);
+        if (game == 1)
+            goto snake;
+        else if (game == 2)
+            goto tictactoe;
+    }
+
+tictactoe:
+
+    while (1)
+    {
+        if (playerMove(matrix, 1) || playerMove(matrix, 2))
+        {
+            goto end;
+        }
+    }
+
+snake:
+
+    setup();
+
+    while (!gameover)
+    {
+        dr_boundary();
+        input();
+        logic();
+        usleep(100000);
+    }
+
+    goto end;
+
+end:
+
+    printf("\nWant to Play Again? (y/n) :: ");
+    scanf("%s", &choice);
+    if (choice == 'y' || choice == 'Y')
+    {
+        main();
+    }
+    printf("\n");
+    goto exit;
+
+exit:
+
+    return 0;
 }
 
-// Function to draw the boundaries
+/* ------------------------------------------------ functions definations for snake_game -------------------------------------------*/
+
+// function to draw the snake game boundary
 void dr_boundary()
 {
     system("clear");
@@ -187,23 +112,69 @@ void dr_boundary()
             }
             else
             {
-                if (i == x && j == y)
-                    printf("-");
-                else if (i == fruitx && j == fruity)
+                int is_segment = 0;
+                struct Node *curr = head;
+                while (curr != NULL)
+                {
+                    if (curr->x == i && curr->y == j)
+                    {
+                        printf("-");
+                        is_segment = 1;
+                        break;
+                    }
+                    curr = curr->next;
+                }
+                if (!is_segment && i == fruitx && j == fruity)
+                {
                     printf("*");
-                else
+                }
+                else if (!is_segment)
+                {
                     printf(" ");
+                }
             }
         }
         printf("\n");
     }
 
     // Print the score after the game ends
-    printf("Current Score = %d", score);
-    printf("\n");
-    printf("press X to quit the game\n");
+    printf("\n\nCurrent Score :: %d", score);
+    printf("\n\nPress X to QUIT\n\n");
 }
 
+// function to generate fruit within the boundary
+void setup()
+{
+    gameover = 0;
+
+    // Stores height and width
+    head = (struct Node *)malloc(sizeof(struct Node));
+    head->x = height / 2;
+    head->y = width / 2;
+    head->next = NULL;
+
+label1:
+    fruitx = rand() % 35;
+    if (fruitx == 0)
+        goto label1;
+label2:
+    fruity = rand() % 35;
+    if (fruity == 0)
+        goto label2;
+    score = 0;
+}
+
+// function to increase snake length
+void add_segment()
+{
+    struct Node *new_segment = (struct Node *)malloc(sizeof(struct Node));
+    new_segment->x = head->x;
+    new_segment->y = head->y;
+    new_segment->next = head->next;
+    head->next = new_segment;
+}
+
+// function to input movements of the snake from the user
 void input()
 {
     int ch;
@@ -234,23 +205,33 @@ void input()
             ch = getchar();
             switch (ch)
             {
-            case 'A': // up arrow key
-                flag = 4;
+            case 'A': // Up arrow key
+                if (flag != 2)
+                {
+                    flag = 1;
+                }
                 break;
-            case 'B': // down arrow key
-                flag = 2;
+            case 'B': // Down arrow key
+                if (flag != 1)
+                {
+                    flag = 2;
+                }
                 break;
-            case 'C': // right arrow key
-                flag = 3;
+            case 'C': // Right arrow key
+                if (flag != 4)
+                {
+                    flag = 3;
+                }
                 break;
-            case 'D': // left arrow key
-                flag = 1;
+            case 'D': // Left arrow key
+                if (flag != 3)
+                {
+                    flag = 4;
+                }
                 break;
             }
             break;
         case 'x':
-            gameover = 1;
-            break;
         case 'X':
             gameover = 1;
             break;
@@ -258,102 +239,223 @@ void input()
     }
 }
 
-// Function for the logic behind each movement
+// function to implement the logic of the game
 void logic()
 {
-    sleep(0.001);
-    switch (flag)
+    int prevx = head->x;
+    int prevy = head->y;
+    int nextx, nexty;
+    struct Node *curr = head->next;
+    head->x += (flag == 1) ? -1 : (flag == 2) ? 1
+                                              : 0;
+    head->y += (flag == 3) ? 1 : (flag == 4) ? -1
+                                             : 0;
+    while (curr != NULL)
     {
-    case 1:
-        y--;
-        break;
-    case 2:
-        x++;
-        break;
-    case 3:
-        y++;
-        break;
-    case 4:
-        x--;
-        break;
-    default:
-        break;
+        nextx = curr->x;
+        nexty = curr->y;
+        curr->x = prevx;
+        curr->y = prevy;
+        prevx = nextx;
+        prevy = nexty;
+        curr = curr->next;
     }
 
-    // If the game is over
-    if (x < 0 || x > height || y < 0 || y > width)
-        gameover = 1;
-
-    if (x == fruitx && y == fruity)
+    if (head->x == 0 || head->x == width - 1 || head->y == 0 || head->y == height - 1)
     {
-    // After eating the above fruit generate new fruit
+        gameover = 1;
+    }
+
+    curr = head->next;
+    while (curr != NULL)
+    {
+        if (curr->x == head->x && curr->y == head->y)
+        {
+            gameover = 1;
+            break;
+        }
+        curr = curr->next;
+    }
+
+    if (head->x == fruitx && head->y == fruity)
+    {
+        add_segment();
+        score += 10;
     label3:
         fruitx = rand() % 35;
         if (fruitx == 0)
             goto label3;
-
     label4:
         fruity = rand() % 35;
         if (fruity == 0)
             goto label4;
-        // If snake reaches the fruit then update the score
-        score += 10;
     }
 }
 
-int main(){
-    int game;
-    while(1){    
-        printf("Do you want to play Snake(1),TicTacToe(2):");
-        scanf("%d",&game);
-        if(game == 1)
-            goto snake;
-        else if(game == 2)
-            goto tictactoe;
-    }
+/* ----------------------------------------------- functions definations for tic-tac-toe_game ----------------------------------------*/
 
-    tictactoe:
-        printf("TicTacToe Begin");
-        char choice;
-        int matrix[3][3] = {0};
-        
-
-        while(1){
-            
-
-            sleep(1);
-            if(playerMove(matrix,1)||playerMove(matrix,2)){
-                goto end;
-            };
-        }
-        end:
-        printf("Want to rerun Program?(y/n)");
-        scanf("%s",&choice);
-        if(choice == 'y'){
-            main();
-        }
-        goto exit;
-
-    
-
-    snake:
-
-    // Generate boundary
-    setup();
-
-    // Until the game is over
-    while (!gameover)
+// function to create a 2-D matrix to store tic-tac-toe
+int draw(int a[N][N])
+{
+    for (int i = 0; i < N; i++)
     {
-
-        // Function Call
-        dr_boundary();
-        input();
-        logic();
+        for (int j = 0; j < N; j++)
+        {
+            if (a[i][j] == 0)
+            {
+                return 0;
+            }
+        }
     }
-    
-    goto exit;
-
-    exit:
-        return 0;
-    
+    return 1;
 }
+
+// function to display tic-tac-toe in each turn
+void display(int a[N][N])
+{
+    system("clear");
+    for (int j = 0; j < N; j++)
+    {
+        printf(" %d ", j);
+    }
+    printf("\n");
+
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            if (a[i][j] == 0)
+            {
+                printf("  |");
+            }
+            else if (a[i][j] == 1)
+            {
+                printf("X |");
+            }
+            else
+            {
+                printf("O |");
+            }
+        }
+        printf(" %d\n", i);
+
+        for (int j = 0; j < N; j++)
+        {
+            if (i == 0 || i == 1)
+            {
+                if (j == 0)
+                {
+                    printf("  -");
+                }
+                else
+                {
+                    printf("---");
+                }
+            }
+        }
+        printf("\n");
+    }
+}
+
+// function to check win in each row
+int check_rows(int array[N][N], int player)
+{
+    for (int i = 0; i < N; i++)
+    {
+        if (array[i][0] == array[i][1] && array[i][1] == array[i][2] && array[i][1] == player)
+        {
+            printf("\nRow %d Win! ", i);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// function to check win in each column
+int check_columns(int array[N][N], int player)
+{
+    for (int i = 0; i < N; i++)
+    {
+        if (array[0][i] == array[1][i] && array[1][i] == array[2][i] && array[1][i] == player)
+        {
+            printf("\nColumn %d Win! ", i);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// function to check win in each diagonal
+int check_diagonals(int array[N][N], int player)
+{
+    if (array[0][0] == array[1][1] && array[1][1] == array[2][2] && array[1][1] == player)
+    {
+        printf("\nDiagonal 1 win! ");
+        return 1;
+    }
+    else if (array[2][0] == array[1][1] && array[1][1] == array[0][2] && array[1][1] == player)
+    {
+        printf("\nDiagonal 2 Win! ");
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+// function to check win in either row, column or diagonal
+int win(int a[N][N], int player)
+{
+    if (check_rows(a, player) || check_columns(a, player) || check_diagonals(a, player))
+    {
+        printf("\n\nCongratulations! Player %d wins!", player);
+        return 1;
+    }
+    return 0;
+}
+
+// function to set move according to player number
+int set(int a[N][N], int m, int n, int player)
+{
+    a[m][n] = player;
+    return 0;
+}
+
+// function to take moves from player turn-wise
+int playerMove(int matrix[N][N], int player)
+{
+    int m, n;
+    char choice = 'c';
+
+    display(matrix);
+    if (draw(matrix))
+    {
+        printf("\n\nNo one Wins!\n\nThank you for playing. \n");
+        return 1;
+    }
+    printf("\nPlayer %d Move (x,y) :: ", player);
+
+    while (1)
+    {
+        scanf("%d %d", &m, &n);
+        if (matrix[n][m] != 0 || m > 2 || n > 2)
+        {
+            printf("\nInCorrect Move\nRe-Enter the Move(x,y) :: ");
+            continue;
+        }
+        set(matrix, n, m, player);
+        break;
+    }
+
+    display(matrix);
+
+    if (win(matrix, player))
+    {
+        printf("\n\nMatch Over!\n\nThank you for Playing. \n");
+        return player;
+    }
+    return 0;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------------*/
