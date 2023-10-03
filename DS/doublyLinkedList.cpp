@@ -23,18 +23,19 @@ class doublyLinkedList{
         tail = nullptr;
     }
     
-    void append(int value){
-        Node * curr = head;
+    void prepend(int value){
         Node * newNode = new Node(value);
-        if(!head){
+         if(!head){
             head = newNode;
             tail = newNode;
             return;
         }
-        tail->next = newNode;
-        newNode->prev = tail;
-        tail = tail->next;
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
     }
+
+
     
     void display(){
         Node * curr = head;
@@ -45,21 +46,11 @@ class doublyLinkedList{
         cout << "null" << endl;
     }
     
-    void remove(int key){
-        Node * curr = head;
-        int flag = 0;
-        while(curr){
-            if(curr->data == key){
-                curr->prev->next = curr->next;
-                curr->next->prev = curr->prev;
-                flag = 1;
-                free(curr);
-            }
-            curr = curr->next;
-        }
-        if(!flag){
-            cout << "Element "<< key << " not found is the list" << endl;
-        }
+    void remove(){
+        Node * temp = tail;
+        tail = tail->prev;
+        tail->next = nullptr;
+        free(temp);
     }
 };
 
@@ -68,21 +59,16 @@ int main() {
     // Write C++ code here
     doublyLinkedList dll;
     cout << "Creation of a Linked List" << endl;
-    dll.append(1);
-    dll.append(2);
-    dll.append(3);
-    dll.append(4);
-    dll.append(5);
+    dll.prepend(1);
+    dll.prepend(2);
+    dll.prepend(3);
+    dll.prepend(4);
+    dll.prepend(5);
     dll.display();
     
     
-    
-    cout << "Removing the Node with 2 Data" << endl;
-    dll.remove(2);
-    dll.display();
-
-    cout << "Trying to remove 69" << endl;
-    dll.remove(69);
+    cout << "Removing the last Node" << endl;
+    dll.remove();
     dll.display();
 
     return 0;
