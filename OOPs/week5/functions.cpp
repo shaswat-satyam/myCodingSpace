@@ -1,46 +1,67 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 
-
-int stringLength(char s[]){
-    int length = 0;
-    while(s[length]){
-        length++;
+class String{
+    public:
+    int len;
+    char * p;
+    String(){
+        cin >> p;
+        len = strlen(p);
     }
-    return length;
-}
+    String(const char *s1){
+        len = strlen(s1);
+        p = new char[len+1];
+        strcpy(p,s1);
+    }
+    String(const String &s1){
+        len = s1.len;
+        p = new char[len+1];
+        strcpy(p,s1.p);
+    }
 
-void toLower(char s[]){
-    int i = 0;
-    while(s[i]){
-        if('A' <= s[i] && s[i] <= 'Z'){
-            s[i] += 32;
+    int stringLength(){
+        int length = 0;
+        while(p[length]){
+            length++;
         }
-        i++;
+        return length;
     }
-    
-}
 
-void toUpper(char s[]){
-    int i = 0;
-    while(s[i]){
-        if('a' <= s[i] && s[i] <= 'z'){
-            s[i] -= 32;
+    void toLower(){
+        char * temp = p;
+        while(temp){
+            if('A' <= *temp && *temp <= 'Z'){
+                *temp += 32;
+            }
+            temp++;
         }
-        i++;
+        
     }
-    
-}
+
+    void toUpper(){
+        char * temp = p;
+        while(temp){
+            if('a' <= *temp && *temp <= 'z'){
+                *temp -= 32;
+            }
+            temp++;
+        }
+        
+    }
+};
 
 
 int main(){
-    char s1[] = "Hello World";
-    cout << s1 << " has a length of "<< stringLength(s1) << endl;
-    cout << s1 << " in lower case is ";
-    toLower(s1); 
-    cout << s1 << endl;
-    cout << s1 << " in upper case is ";
-    toUpper(s1); 
-    cout << s1 << endl;
+    String s1;
+    cout << s1.p << " has a length of "<< s1.stringLength() << endl;
+    cout << s1.p << " in lower case is ";
+
+    s1.toLower(); 
+    // cout << s1.p << endl;
+    // cout << s1.p << " in upper case is ";
+    // s1.toUpper(); 
+    // cout << s1.p << endl;
 }
