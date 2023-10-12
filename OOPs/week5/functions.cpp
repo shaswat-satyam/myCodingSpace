@@ -8,8 +8,8 @@ class String{
     int len;
     char * p;
     String(){
-        cin >> p;
-        len = strlen(p);
+        p = 0;
+        len = 0;
     }
     String(const char *s1){
         len = strlen(s1);
@@ -31,23 +31,23 @@ class String{
     }
 
     void toLower(){
-        char * temp = p;
-        while(temp){
-            if('A' <= *temp && *temp <= 'Z'){
-                *temp += 32;
+        int length = 0;
+        while(p[length]){
+            if('A' <= p[length] && p[length] <= 'Z'){
+                p[length] += 32;
             }
-            temp++;
+            length++;
         }
         
     }
 
     void toUpper(){
-        char * temp = p;
-        while(temp){
-            if('a' <= *temp && *temp <= 'z'){
-                *temp -= 32;
+        int length = 0;
+        while(p[length]){
+            if('a' <= p[length] && p[length] <= 'z'){
+                p[length] -= 32;
             }
-            temp++;
+            length++;
         }
         
     }
@@ -55,13 +55,12 @@ class String{
 
 
 int main(){
-    String s1;
+    String s1("Hello World");
     cout << s1.p << " has a length of "<< s1.stringLength() << endl;
     cout << s1.p << " in lower case is ";
-
     s1.toLower(); 
-    // cout << s1.p << endl;
-    // cout << s1.p << " in upper case is ";
-    // s1.toUpper(); 
-    // cout << s1.p << endl;
+    cout << s1.p << endl;
+    cout << s1.p << " in upper case is ";
+    s1.toUpper(); 
+    cout << s1.p << endl;
 }
