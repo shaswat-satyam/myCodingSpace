@@ -6,13 +6,13 @@
         public:
             double a;
             double b;
-            void setdata(){
+            virtual void setdata(){
                 cout << "Enter the sides ";
                 cin >> a;
                 cin >> b;
             }
-            float area(){
-                cout << "Ther is no area";
+            virtual double area(){
+                cout << "There is no area";
                 return 0;
             }
     };
@@ -51,11 +51,19 @@
 
 
     int main(){
+        Shape * sptr;
+        Shape s1;
         Triangle t1;
-        t1.setdata();
-        cout << "Area of the triangle is " << t1.area() << endl;
         Rectangle r1;
-        r1.setdata();
-        cout << "Area of the rectangle is " << r1.area() << endl;
+
+
+        sptr = &r1;
+        sptr->setdata();
+        cout << "The area of rectangle is "<<sptr->area() << endl;
+
+        sptr = &t1;
+        sptr->setdata();
+        cout << "The area of triangle is " << sptr->area() << endl;
+       
         return 0;
     }
