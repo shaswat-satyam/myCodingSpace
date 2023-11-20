@@ -20,12 +20,17 @@ int main(){
     cout << "The value in iteration 0 is " << result << endl;
     
     for(int i = 1; i < n; i++){
-        result += (h*f(a+i*h));
+        if (i%2 != 0){
+            result += (4*(h*f(a+i*h)))/3;
+        }
+        else{
+            result += (2*(h*f(a+i*h)))/3;
+        }
         cout << "The value in iteration "<< i << " is " << result << endl;
     }
-    result += (h*f(b))/2;
+    result += (h*f(b))/3;
     cout << "The value in iteration "<< n-1 <<" is " << result << endl;
 
     cout << endl << "The final result is " << result <<" taking h as "<< h << endl;
-
+    return 0;
 }

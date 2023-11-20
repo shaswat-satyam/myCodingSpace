@@ -56,14 +56,14 @@
         Triangle t1;
         Rectangle r1;
 
+        sptr = &t1;
+        sptr->setdata();
+        cout << "The area of triangle is " << sptr->area() << endl;
 
         sptr = &r1;
         sptr->setdata();
         cout << "The area of rectangle is "<<sptr->area() << endl;
 
-        sptr = &t1;
-        sptr->setdata();
-        cout << "The area of triangle is " << sptr->area() << endl;
        
         return 0;
     }

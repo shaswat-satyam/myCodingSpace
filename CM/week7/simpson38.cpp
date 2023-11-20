@@ -16,16 +16,21 @@ int main(){
     double result = 0;
     double h = (b-a)/n ;
     
-    result = (h*f(a))/3;
+    result = (3*h*f(a))/8;
     cout << "The value in iteration 0 is " << result << endl;
     
     for(int i = 1; i < n; i++){
-        result += (h*f(a+i*h));
+        if (i%3 == 0){
+            result += (6*(h*f(a+i*h)))/8;
+        }
+        else{
+            result += (9*(h*f(a+i*h)))/8;
+        }
         cout << "The value in iteration "<< i << " is " << result << endl;
     }
-    result += (h*f(b))/2;
+    result += (3*h*f(b))/8;
     cout << "The value in iteration "<< n-1 <<" is " << result << endl;
 
     cout << endl << "The final result is " << result <<" taking h as "<< h << endl;
-
+    return 0;
 }
