@@ -49,7 +49,7 @@ public class transaction{
 
     }
     public static void main(String[] args) {
-        transaction t1 = new transaction(2900);
+        transaction t1 = new transaction();
         System.out.println(Arrays.toString(t1.notes()));
     }
 

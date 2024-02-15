@@ -15,7 +15,7 @@ public class token{
     int count(){
         int token = 1;
         for(int i = 0; i < input.length();i++){
-            if(input.charAt(i)==' '){
+            if(input.charAt(i)==sep){
                 token++;
             }
         }
@@ -38,7 +38,7 @@ public class token{
     public static void main(String[] args) {
 
         
-        token t1 = new token("Hello WOrld tis is but a string");
+        token t1 = new token();
         System.out.println(t1.count());
         String tokens[] = t1.tokenize();
         for(int i = 0; i < tokens.length;i++){

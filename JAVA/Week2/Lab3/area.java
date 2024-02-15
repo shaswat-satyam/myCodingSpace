@@ -30,7 +30,7 @@ double area(double a, double b, double c){
         System.out.println("The Area of the rectangle is "+String.valueOf(a1.area(input.nextDouble(),input.nextDouble())));
 
         System.out.print("Enter the 3 sides of the triangle:");
-        System.out.println("The Area of the triangle is"+String.valueOf(a1.area(input.nextDouble(),input.nextDouble(),input.nextDouble())));
+        System.out.println("The Area of the triangle is "+String.valueOf(a1.area(input.nextDouble(),input.nextDouble(),input.nextDouble())));
             
     }
 }

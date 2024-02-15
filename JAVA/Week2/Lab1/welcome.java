@@ -5,6 +5,6 @@ public class welcome {
             System.out.println("Error! Enter a valid name!");
             return;
         }
-        System.out.println( "Welcome " + args[0] + " to the JAVA lab" );
+        System.out.println( "Welcome to the JAVA lab " + args[0] );
     }
 }
