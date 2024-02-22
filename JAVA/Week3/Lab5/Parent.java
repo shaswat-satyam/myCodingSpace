@@ -1,9 +1,12 @@
-package Week3.Lab5;
-
 public class Parent extends Base {
-    @Override
     void display() {
-        // TODO Auto-generated method stub
         System.out.println("Parent class Display function is called");
+    }
+    public static void main(String[] args) {
+        Base b1 = new Base();
+        b1.display();
+
+        Parent p1 = new Parent();
+        p1.display();
     }
 }
