@@ -1,7 +1,6 @@
-package interfaces;
-import interfaces.Inter;
+package pack;
 public class Implement2 implements Inter{
-    void display(){
+   public void display(){
        System.out.println("Second implementation of Interface");
     }
 }
