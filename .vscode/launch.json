@@ -1,12 +1,20 @@
 {
     "configurations": [
-        
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "com.lab.App",
+            "projectName": "dynamic"
+        },
         {
             "name": "C/C++: g++ build and debug active file",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["gcc"],
+            "args": [
+                "gcc"
+            ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
