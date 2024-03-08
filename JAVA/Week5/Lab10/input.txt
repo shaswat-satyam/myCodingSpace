@@ -1,0 +1,2 @@
+lorem ipsum dorem. 
+This is the input file ready to be written to the output file.
